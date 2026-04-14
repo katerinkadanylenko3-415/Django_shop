@@ -1,0 +1,55 @@
+
+
+
+{% extends "base.html" %}
+{% block main %}
+<div class="container mt-5">
+    <h2>Ваш кошик</h2>
+
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert alert-{{ message.tags }}">{{ message }}</div>
+        {% endfor %}
+    {% endif %}
+
+    <table class="table align-middle">
+        <thead>
+            <tr>
+                <th>Фото</th>
+                <th>Назва</th>
+                <th>Кількість</th>
+                <th>Ціна</th>
+                <th>Підсумок</th>
+                <th>Дія</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in cart %}
+            {% with product=item.product %}
+            <tr>
+                <td><img src="{{ product.image.url }}" width="50"></td>
+                <td>{{ product.title }}</td>
+                <td>
+                    <a href="{% url 'cart_decrement' product.id %}" class="btn btn-sm btn-outline-secondary">-</a>
+                    <span class="mx-2">{{ item.quantity }}</span>
+                    <a href="{% url 'cart_add' product.id %}" class="btn btn-sm btn-outline-secondary">+</a>
+                </td>
+                <td>${{ item.price }}</td>
+                <td>${{ item.total_price }}</td>
+                <td>
+                    <a href="{% url 'cart_remove' product.id %}" class="btn btn-sm btn-danger">Видалити</a>
+                </td>
+            </tr>
+            {% endwith %}
+            {% empty %}
+            <tr><td colspan="6">Кошик порожній</td></tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <div class="d-flex justify-content-between">
+        <h4>Загальна сума: ${{ cart.get_total_price }}</h4>
+        <a href="{% url 'cart_clear' %}" class="btn btn-outline-danger">Очистити кошик</a>
+    </div>
+</div>
+{% endblock %}

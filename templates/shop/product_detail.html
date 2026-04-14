@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+
+{% block main %}
+<div class="container mt-5">
+    <div class="row bg-white shadow-lg p-4 p-md-5 rounded-4 border-0">
+
+        <div class="col-md-6 text-center bg-light rounded-4 p-4 d-flex align-items-center justify-content-center">
+            <img src="{{ product.image.url }}" class="img-fluid" alt="{{ product.title }}"
+                 style="max-height: 450px; object-fit: contain; filter: drop-shadow(0 10px 15px rgba(0,0,0,0.05));">
+        </div>
+
+        <div class="col-md-6 ps-md-5 mt-4 mt-md-0 d-flex flex-column">
+            <nav aria-label="breadcrumb" class="mb-3">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="{% url 'product_list' %}" class="text-decoration-none text-muted">Магазин</a></li>
+                    <li class="breadcrumb-item active text-primary" aria-current="page">{{ product.title }}</li>
+                </ol>
+            </nav>
+
+            <h1 class="fw-bold display-5 mb-2">{{ product.title }}</h1>
+            <p class="text-muted mb-4">Категорія: <span class="badge bg-light text-dark border">{{ product.category.name }}</span></p>
+
+            <h2 class="text-primary fw-bold mb-4">{{ product.price }} <small class="text-muted fs-5">UAH</small></h2>
+
+            <div class="mb-4">
+                <h5 class="fw-bold">Опис товару:</h5>
+                <p class="text-muted" style="line-height: 1.7; font-size: 1.1rem;">
+                    {{ product.description|linebreaks }}
+                </p>
+            </div>
+
+            <div class="mt-auto pt-4 border-top">
+                <div class="d-flex flex-wrap gap-3">
+                    <a href="{% url 'cart_add' product.id %}" class="btn btn-primary btn-lg px-5 rounded-pill shadow-sm d-flex align-items-center">
+                        <span class="me-2">🛒</span> Додати в кошик
+                    </a>
+
+                    <a href="{% url 'toggle_like' product.slug %}" class="btn btn-outline-danger btn-lg rounded-pill px-4 d-flex align-items-center">
+                        {% if user in product.likes.all %}
+                            <span class="me-1">❤️</span> В обраному
+                        {% else %}
+                            <span class="me-1">🤍</span> Лайк
+                        {% endif %}
+                    </a>
+                </div>
+
+                <div class="mt-4">
+                    <a href="{% url 'product_list' %}" class="btn btn-link text-muted p-0 text-decoration-none">
+                        ← Повернутися до всіх товарів
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

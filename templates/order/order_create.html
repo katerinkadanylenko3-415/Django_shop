@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block main %}
+
+<div class="container mt-5">
+
+    <h2 class="mb-4">Your order</h2>
+
+    <form method="POST">
+        {% csrf_token %}
+        {{ form }}
+        <button type="submit">Order</button>
+    </form>
+</div>
+{% endblock %}
