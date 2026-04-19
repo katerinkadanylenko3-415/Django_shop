@@ -14,6 +14,8 @@ from pathlib import Path
 
 from django.conf.global_settings import LOGIN_REDIRECT_URL
 
+from config.settings import SECRET_KEY
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -21,8 +23,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-8uyjz1b9n@5#tn@ei--vx@&p9lx_^eef56=6t=$7chh^_pvied'
-
+# SECRET_KEY = 'django-insecure-8uyjz1b9n@5#tn@ei--vx@&p9lx_^eef56=6t=$7chh^_pvied'
+# SECRET_KEY = os.getenv('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
@@ -44,6 +46,7 @@ INSTALLED_APPS = [
     'gallery',
     'easy_thumbnails',
     'shop',
+    'order'
 
 ]
 
@@ -134,7 +137,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 
-LOGIN_REDIRECT_URL = "home"
+
 LOGIN_URL = "login"
 LOGOUT_REDIRECT_URL = 'home'
 LOGOUT_URL = "logout"

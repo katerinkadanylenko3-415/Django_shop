@@ -7,13 +7,16 @@ class OrderItemInLine(admin.TabularInline):
     model = OrderItem
 
 
+from django.contrib import admin
+from .models import Order, OrderItem
+
+class OrderItemInLine(admin.TabularInline):
+    model = OrderItem
+    extra = 0
+
 @admin.register(Order)
 class OrderAdmin(admin.ModelAdmin):
-    list_display = ['id', 'first_name', 'second_name', 'email', 'created', ]
-    list_filter = ['created', ]
-    inlines = [OrderItemInLine, ]
-
-    def get_total_cost(self, obj):
-        return sum(item.get_total_price() for item in obj.items.all())
-
-    get_total_cost.short_description = "Total"
+    list_display = ['order_number', 'user', 'first_name', 'status', 'created', 'paid']
+    list_filter = ['status', 'created', 'paid']
+    list_editable = ['status', 'paid']
+    inlines = [OrderItemInLine]

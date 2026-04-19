@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block main %}
+<div class="container mt-5">
+    <h2>Замовлення №{{ order.order_number }}</h2>
+    <p>Статус: {{ order.get_status_display }} | Дата: {{ order.created }}</p>
+    
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Товар</th>
+                <th>Ціна</th>
+                <th>Кількість</th>
+                <th>Сума</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in order.items.all %}
+            <tr>
+                <td>{{ item.product.name }}</td>
+                <td>{{ item.price }}</td>
+                <td>{{ item.quantity }}</td>
+                <td>{{ item.get_cost }} грн</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <h4 class="text-end">Загальна сума: {{ order.get_total_cost }} грн</h4>
+</div>
+{% endblock %}
